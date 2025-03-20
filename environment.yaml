@@ -1,0 +1,37 @@
+name: ood-formation-energy
+channels:
+  - pytorch
+  - pyg
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - pytorch=2.2.2
+  - pytorch-cuda=12.1
+  - torchaudio=2.2.2
+  - torchvision=0.17.2
+  - pyg=2.5.2
+  - numpy
+  - scipy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - tqdm
+  - pyyaml
+  - tensorboard
+  - pip
+  - pip:
+    - lightning==2.3.3
+    - torch-cluster==1.6.3+pt22cu121
+    - torch-scatter==2.1.2+pt22cu121
+    - torch-sparse==0.6.18+pt22cu121
+    - torch-spline-conv==1.2.2+pt22cu121
+    - mace-torch==0.3.6
+    - e3nn==0.4.4
+    - matminer==0.9.2
+    - einops
+    - opt-einsum
+    - opt-einsum-fx
+    - ase
+    - pymatgen 

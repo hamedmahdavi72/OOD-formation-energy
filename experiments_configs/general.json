@@ -1,0 +1,41 @@
+{
+  "project_name": "ood_embeddings",
+  "accelerator": "gpu",
+  "device_no": 2,
+  "elements_features_num": null,
+  "seed": 58,
+  "registered_models": [
+      "mace"
+  ],
+  "log_every_n_steps": 10,
+  "logs_dir": "/storage/group/vuh14/default/hmm5834_files/projects/ood-embeddings/logs/Experiment2-new",
+  "num_loader_workers": 7,
+  "max_grad_norm": 2.5,
+  "warmup_steps": 10,
+  "flush_logs_every_n_steps ": 10,
+  "cutoff": 5.0,
+  "schnet": {
+    "lr": 0.001,
+    "batch_size": 256,
+    "accumulate_grad_batches": 1,
+    "epochs": 150
+  },
+  "dimenet": {
+    "lr": 0.001,
+    "batch_size": 32,
+    "accumulate_grad_batches": 8,
+    "epochs": 100
+  },
+  "dimenetplusplus": {
+    "lr": 0.001,
+    "batch_size": 32,
+    "accumulate_grad_batches": 8,
+    "epochs": 100
+  },
+  "mace": {
+    "lr": 0.005,
+    "batch_size": 128,
+    "accumulate_grad_batches": 2,
+    "epochs": 100
+  }
+}

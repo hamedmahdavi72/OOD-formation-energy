@@ -44,26 +44,6 @@
 "mace": {
     "r_max": 5.0,
     "radial_type": "bessel",
-    "num_bessel": 4,
-    "num_polynomial_cutoff": 3,
-    "pair_repulsion": false,
-    "distance_transform": "None",
-    "interaction_cls": "RealAgnosticResidualInteractionBlock",
-    "interaction_cls_first": "RealAgnosticResidualInteractionBlock",
-    "max_ell": 3,
-    "correlation": 3,
-    "num_interactions": 2,
-    "MLP_irreps": "16x0e",
-    "radial_MLP": [32, 32, 32],
-    "hidden_irreps": "128x0e + 128x1o",
-    "gate": "silu",
-    "avg_num_neighbors": 1.0,
-	"atomic_inter_shift": 0
-},
-
-"mace-large": {
-    "r_max": 5.0,
-    "radial_type": "bessel",
     "num_bessel": 8,
     "num_polynomial_cutoff": 5,
     "pair_repulsion": false,
@@ -79,8 +59,9 @@
     "gate": "silu",
     "avg_num_neighbors": 1.0,
 	"atomic_inter_shift": 0
-}
-,
+},
+
+
 "mlp_hidden_dim": 64,
 "mace_hidden_dim": 128
 

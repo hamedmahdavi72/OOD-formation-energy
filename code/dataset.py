@@ -22,6 +22,7 @@ sys.path.append(parent)
 from torch_geometric.loader import DataLoader
 from mace import modules
 from utils import save_object,load_object, random_subset, ELEMENTS_NO
+from utils import compute_mean_std_atomic_inter_energy
 
 
 
@@ -245,7 +246,7 @@ def  init_data(dataset_config, general_params, model_name):
         batch_size=general_params[model_name]["batch_size"],
         shuffle=True,
         drop_last=False,
-        num_workers = 5
+        num_workers = 4
     )   
 
     test_loader = DataLoader(
@@ -253,12 +254,13 @@ def  init_data(dataset_config, general_params, model_name):
         batch_size=general_params[model_name]["batch_size"],
         shuffle=False,
         drop_last=False,
-        num_workers = 5
+        num_workers = 4
 
     )
     dataset_statistics = {
 
     }
+    dataset_statistics["mean"], dataset_statistics["std"] = compute_mean_std_atomic_inter_energy(train_loader, data_interface)
 
     if data_interface == "mace":
         dataset_statistics["avg_num_neighbors"] = modules.compute_avg_num_neighbors(train_loader)

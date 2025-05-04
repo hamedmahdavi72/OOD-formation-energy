@@ -3,14 +3,16 @@ import torch
 import os.path as osp
 import lightning as L
 from lightning.pytorch.utilities import grad_norm
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
 class LightningWrapper(L.LightningModule):
     def __init__(self, model, optimizer, scheduler, general_params,):
         super().__init__()
         self.model = model
         self.optimizer = optimizer
-        self.val_mae_list = []
-        self.val_mae_per_atom_list = []
+        self.targets = []
+        self.predictions = []
+
         self.general_params = general_params
         self.scheduler = scheduler
 
@@ -29,30 +31,28 @@ class LightningWrapper(L.LightningModule):
         return loss
     
     def test_step(self, batch, batch_idx):
-        data = batch    
-        pred, target= self.model.predict(data), self.model.get_targets(data)
-
-        mae_per_atom = (pred.view(-1) - target).abs() / data.atoms_no
-        mae = (pred.view(-1) - target).abs() / len(data)
-
-        self.log("mae_per_atom", mae_per_atom, sync_dist=True)
-        self.log("mae", mae, sync_dist=True)
+        pass
+     
 
     def validation_step(self, batch, batch_idx):
         data = batch    
         pred,target = self.model.predict(data), self.model.get_targets(data)
-        mae_per_atom = (pred.view(-1) - target).abs() / data.atoms_no
-        mae = (pred.view(-1) - target).abs()
-        self.val_mae_list.append(mae)
-        self.val_mae_per_atom_list.append(mae_per_atom)
+        self.targets.append(target)
+        self.predictions.append(pred)
 
+     
     def on_validation_epoch_end(self):
-        mae_mean = torch.cat(self.val_mae_list, dim=0).mean().item()
-        self.val_mae_list = []
+        targets = torch.cat(self.targets, dim=0).detach().cpu().numpy()
+        predictions = torch.cat(self.predictions, dim=0).detach().cpu().numpy()
+        mae_mean = mean_absolute_error(targets, predictions)
+        mse_mean = mean_squared_error(targets, predictions)
+        r2 = r2_score(targets, predictions)
         self.log("val_mae_mean", mae_mean, sync_dist=True)
-        mae_per_atom_mean = torch.cat(self.val_mae_per_atom_list, dim=0).mean().item()
-        self.val_mae_per_atom_list = []
-        self.log("val_mae_per_atom", mae_per_atom_mean, sync_dist=True)
+        self.log("val_mse_mean", mse_mean, sync_dist=True)
+        self.log("val_r2_mean", r2, sync_dist=True)
+        self.targets = []
+        self.predictions = []
+     
 
     def configure_optimizers(self):
        

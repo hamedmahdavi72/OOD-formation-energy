@@ -20,7 +20,7 @@ Our approach demonstrates significant improvements in OOD scenarios:
 - Performance remains strong even when predicting compounds with multiple unseen elements
 - Substantial improvement over baseline models that lack access to elemental features
 
-![Performance comparison](figures/Performance-vs-new-elements-ratio-Experiment2.png)
+![Performance comparison](figures/Performance-vs-new-elements-ratio-Experiment-2.png)
 
 ## Technical Approach
 
@@ -48,20 +48,20 @@ conda activate materials-ml
 
 # Run experiments with different configurations
 # OOD experiments with excluded elements
-python code/evaluate.py --experiment_type ood_list --excluded_elements_list 51 11 34 44 65 39 89 35
+python code/evaluate.py --experiment_type ood-list --excluded_elements_list 51 11 34 44 65 39 89 35
 
 # OOD experiments with IID training
-python code/evaluate.py --experiment_type ood_list_train_iid --excluded_elements_list 92 48 19 22 77 68 52 20
+python code/evaluate.py --experiment_type ood-list-train-iid --excluded_elements_list 92 48 19 22 77 68 52 20
 
 # OOD experiments with IID training and scaling
-python code/evaluate.py --experiment_type ood_list_train_iid_scaled --excluded_elements_list 70 69 93 38 70 67 65 21 23 39
+python code/evaluate.py --experiment_type ood-list-train-iid_scaled --excluded_elements_list 70 69 93 38 70 67 65 21 23 39
 
 # Run batch experiments using the provided script
 bash run-ood-experiments.sh
 ```
 
 Parameters:
-- `--experiment_type`: Choose from `ood_list`, `ood_list_train_iid`, or `ood_list_train_iid_scaled`
+- `--experiment_type`: Choose from `ood-list`, `ood-list-train-iid`, or `ood-list-train-iid-scaled`
 - `--excluded_elements_list`: Atomic numbers of elements to exclude from training
 - `--model_type`: Select model architecture (default: mace)
 - `--results_directory`: Directory to save results
